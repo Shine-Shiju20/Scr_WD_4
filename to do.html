@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" type="text/css" href="to do styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>To Do List</h2>
+            <input type="text" placeholder="Write here..." id="inputBx">
+            <ul id="list"></ul>
+        </div>
+    </div>
+    <script>
+    let inputBx = document.querySelector('#inputBx');
+    let list = document.querySelector('#list');
+
+    // Load saved items from localStorage on page load
+    window.addEventListener("load", function() {
+        let savedItems = JSON.parse(localStorage.getItem("todoList")) || [];
+        savedItems.forEach(item => {
+            let listItem = document.createElement("li");
+            listItem.innerHTML = `${item.text}<i></i>`;
+            if (item.done) {
+                listItem.classList.add('done');
+            }
+            listItem.addEventListener("click", function() {
+                this.classList.toggle('done');
+                saveData();
+            });
+
+            listItem.querySelector("i").addEventListener("click", function() {
+                listItem.remove();
+                saveData();
+            });
+
+            list.appendChild(listItem);
+        });
+    });
+
+    inputBx.addEventListener("keyup", function(event) { 
+        if (event.key == "Enter") {
+            addItem(this.value);
+            saveData();
+            this.value = "";
+        }
+    });
+
+    let addItem = (inputBx) => {
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `${inputBx}<i></i>`;
+        listItem.addEventListener("click", function() {
+            this.classList.toggle('done');
+            saveData();
+        });
+
+        listItem.querySelector("i").addEventListener("click", function() {
+            listItem.remove();
+            saveData();
+        });
+
+        list.appendChild(listItem);
+    };
+
+    // Save data to localStorage
+    let saveData = () => {
+        let items = [];
+        list.querySelectorAll("li").forEach(item => {
+            items.push({ text: item.childNodes[0].textContent, done: item.classList.contains('done') });
+        });
+        localStorage.setItem("todoList", JSON.stringify(items));
+    };
+    </script>
+</body>
+</html>
