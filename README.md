@@ -17,6 +17,9 @@ Can be deleted at anytime.
 Technology Stack:
 HTML CSS JavaScript
 
+LinkedIn: 
+https://www.linkedin.com/posts/shine-shiju-821652256_skillcrafttechnology-internship-activity-7264702933009608704--MtU?utm_so
+
 
 Author- SHINE SHIJU 
 shineshiju2005@gmail.com 
